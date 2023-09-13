@@ -15,11 +15,13 @@ public class SimpleAnimator : NetworkBehaviour
     private bool isSprint;
     private bool dance1;
     private bool dance2;
+    private bool sit;
 
     private static readonly float IDLE = 0f;
     private static readonly float WALK = 0.5f;
     private static readonly float RUN = 1f;
     private static readonly float DANCE = 2f;
+    private static readonly float SIT = 0.5f;
 
     private static readonly int IS_GROUNDED_PARAM_HASH = Animator.StringToHash(RPMConstant.GROUNDED);
     private static readonly int SPEED_PARAM_HASH = Animator.StringToHash(RPMConstant.MOVESPEED);
@@ -27,6 +29,7 @@ public class SimpleAnimator : NetworkBehaviour
     private static readonly int FALL_PARAM_HASH = Animator.StringToHash(RPMConstant.FALL);
     private static readonly int DANCE_PARAM_HASH = Animator.StringToHash("dance1");
     private static readonly int DANCE_PARAM_HASH2 = Animator.StringToHash("dance2");
+    private static readonly int SIT_PARAM_HASH = Animator.StringToHash("sit");
 
     private void Awake()
     {
@@ -75,6 +78,7 @@ public class SimpleAnimator : NetworkBehaviour
 
         dance1 = Input.GetKeyDown(KeyCode.Alpha1);
         dance2 = Input.GetKeyDown(KeyCode.Alpha2);
+        sit    = Input.GetKeyDown(KeyCode.P);
     }
 
     private void AnimatorBridge()
@@ -105,11 +109,18 @@ public class SimpleAnimator : NetworkBehaviour
                     animator.SetFloat(SPEED_PARAM_HASH, DANCE);
                     animator.SetBool(DANCE_PARAM_HASH2, true);
                 }
+                else if (sit)
+                {
+                    animator.SetFloat(SPEED_PARAM_HASH, SIT);
+                    animator.SetBool(SIT_PARAM_HASH, true);
+                    
+                }
                 else
                 {
                     animator.SetFloat(SPEED_PARAM_HASH, IDLE);
                     animator.SetBool(DANCE_PARAM_HASH, false);
                     animator.SetBool(DANCE_PARAM_HASH2, false);
+                    animator.SetBool(SIT_PARAM_HASH, false);
                 }
             }
             else if (isSprint)
@@ -129,7 +140,6 @@ public class SimpleAnimator : NetworkBehaviour
         {
             animator.SetBool(FALL_PARAM_HASH, true);
             animator.SetBool(DANCE_PARAM_HASH, false);
-            animator.SetBool(DANCE_PARAM_HASH2, false);
         }
     }
 }

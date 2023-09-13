@@ -112,3 +112,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654a92f10aadc5d4aacebfbec517b4e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currencyPointsText: {fileID: 0}
